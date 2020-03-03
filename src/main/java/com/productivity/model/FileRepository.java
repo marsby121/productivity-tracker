@@ -1,22 +1,27 @@
 package com.productivity.model;
 
 
+import com.productivity.model.record.Record;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
-public class FileRepository {
-    private static final String FILE_NAME = "records.bin";
+public class FileRepository<E> {
+    private final String fileName;
 
+    public FileRepository(String fileName) {
+        this.fileName = fileName;
+    }
 
-    public void save(ObservableList<Record> records) {
+    public void save(ObservableList<E> records) {
         try {
-            List<Record> asArray = new ArrayList<>(records); // bo ObservableList nie jest serializable
-            FileOutputStream fos = new FileOutputStream(FILE_NAME);
+            List<E> asArray = new ArrayList<>(records); // bo ObservableList nie jest serializable
+            FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(asArray);
             oos.flush();
@@ -26,12 +31,12 @@ public class FileRepository {
         }
     }
 
-    public ObservableList<Record> load() {
-        ObservableList<Record> records = FXCollections.observableArrayList();
+    public List<E> load() {
+        List<E> data = new ArrayList<>();
         try {
-            FileInputStream fis = new FileInputStream(FILE_NAME);
+            FileInputStream fis = new FileInputStream(fileName);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            records.addAll ( (List<Record>) ois.readObject());
+            data = (ArrayList<E>) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
             System.out.println("No previous data to load");
@@ -40,6 +45,7 @@ public class FileRepository {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return records;
+        return data;
     }
+
 }

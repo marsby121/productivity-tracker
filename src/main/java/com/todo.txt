@@ -1,0 +1,11 @@
+Moduł wprowadzania danych:
+Done:
+różne rodzaje kategorii -> nowe rodzaje -> okno edycji kategorii
+Aktualizacja tabeli i rekordów
+godziny / minuty
+error - no category selected
+
+
+cel dzienny
+timer
+pasek od timera

@@ -8,4 +8,5 @@ module Productivity.Tracker {
     opens com.productivity;
     opens com.productivity.controller;
     opens com.productivity.model;
+    opens com.productivity.model.record;
 }

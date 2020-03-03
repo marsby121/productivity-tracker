@@ -1,16 +1,19 @@
 package com.productivity;
 
-import com.productivity.model.RecordManager;
+import com.productivity.model.category.CategoryManager;
+import com.productivity.model.record.RecordManager;
 import com.productivity.view.ViewFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Launch extends Application {
+public class Launcher extends Application {
 
    private final RecordManager recordManager;
+   private final CategoryManager categoryManager;
 
-    public Launch() {
+    public Launcher() {
         recordManager = new RecordManager();
+        categoryManager = new CategoryManager();
     }
 
     public static void main(String[] args) {
@@ -19,12 +22,13 @@ public class Launch extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        ViewFactory factory = new ViewFactory(recordManager);
+        ViewFactory factory = new ViewFactory(recordManager, categoryManager);
         factory.showMainWindow();
     }
 
     @Override
     public void stop() throws Exception {
         recordManager.saveData();
+        categoryManager.saveData();
     }
 }

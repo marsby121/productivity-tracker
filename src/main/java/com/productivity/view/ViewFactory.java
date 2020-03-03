@@ -1,8 +1,10 @@
 package com.productivity.view;
 
-import com.productivity.model.RecordManager;
+import com.productivity.controller.CategorySettingsController;
+import com.productivity.model.category.CategoryManager;
+import com.productivity.model.record.RecordManager;
 import com.productivity.controller.BaseController;
-import com.productivity.controller.MainWindow;
+import com.productivity.controller.MainWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,18 +17,26 @@ import java.util.List;
 public class ViewFactory {
 
     private RecordManager recordManager;
+    private CategoryManager categoryManager;
     private List<Stage> activeStages;
 
 
 
-    public ViewFactory(RecordManager recordManager) {
+    public ViewFactory(RecordManager recordManager, CategoryManager categoryManager) {
         this.recordManager = recordManager;
+        this.categoryManager = categoryManager;
         activeStages = new ArrayList<>();
     }
 
     public void showMainWindow() {
-        BaseController controller = new MainWindow(recordManager, this,
+        BaseController controller = new MainWindowController(recordManager, categoryManager, this,
                 "/view/MainWindow.fxml");
+        initializeStage(controller);
+    }
+
+    public void showCategorySettings(){
+        BaseController controller = new CategorySettingsController(recordManager,categoryManager, this,
+                "/view/CategorySettings.fxml");
         initializeStage(controller);
     }
 
